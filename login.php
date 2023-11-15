@@ -24,30 +24,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Jika tidak ada kesalahan validasi
     if (empty($username_err) && empty($password_err)) {
         // Query untuk mencari pengguna dengan username yang sesuai
-        $query = "SELECT * FROM users WHERE username='$username'";
-        $result = mysqli_query($link, $query);
+        $query = "SELECT id, username, password FROM users WHERE username = ?";
+        $stmt = mysqli_prepare($link, $query);
 
-        // Periksa apakah pengguna ditemukan
-        if (mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            // Verifikasi password
-            if (password_verify($password, $row['password'])) {
-                // Password cocok, proses login
-                echo "Login berhasil!";
-                header("location:home.php");
+        if ($stmt) {
+            // Bind variabel ke pernyataan persiapan sebagai parameter
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+
+            // Set parameter
+            $param_username = $username;
+
+            // Coba eksekusi pernyataan persiapan
+            if (mysqli_stmt_execute($stmt)) {
+                // Simpan hasil
+                mysqli_stmt_store_result($stmt);
+
+                if (mysqli_stmt_num_rows($stmt) == 1) {
+                    // Bind hasil ke variabel
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+
+                    if (mysqli_stmt_fetch($stmt)) {
+                        // Verifikasi password
+                        if (password_verify($password, $hashed_password)) {
+                            // Password cocok, proses login
+                            echo "Login berhasil!";
+                        } else {
+                            // Password tidak cocok, tampilkan pesan error
+                            $password_err = "Invalid password. Please try again.";
+                        }
+                    }
+                } else {
+                    // Pengguna tidak ditemukan, tampilkan pesan error
+                    $username_err = "No account found with that username.";
+                }
             } else {
-                // Password tidak cocok, tampilkan pesan error
-                $password_err = "Invalid password. Please try again.";
+                echo "Oops! Something went wrong. Please try again later.";
             }
-        } else {
-            // Pengguna tidak ditemukan, tampilkan pesan error
-            $username_err = "No account found with that username.";
         }
-    }
-}
 
-// Tutup koneksi
-mysqli_close($link);
+        // Tutup pernyataan
+        mysqli_stmt_close($stmt);
+    }
+
+    // Tutup koneksi
+    mysqli_close($link);
+}
 ?>
 
 <!DOCTYPE html>
