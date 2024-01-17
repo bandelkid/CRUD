@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Data Buku</title>
-    <link rel="stylesheet" href="bootstrap-5.1.3-dist\css\bootstrap.css">
-    <link rel="stylesheet" href="fontawesome-free-6.0.0-web\css\all.min.css">
-    
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
     <style type="text/css">
         .wrapper{
             width: 650px;
@@ -38,18 +39,22 @@
                     require_once "config.php";
 
                     // Attempt select query execution
-                    $sql = "SELECT * FROM databuku";
+                    $link = mysqli_connect($servername, $username, $password, $database);
+                    
+
+                    $sql = "SELECT * FROM tabel_buku";
                     if($result = mysqli_query($link, $sql)){
                         if(mysqli_num_rows($result) > 0){
-                            echo "<table class='table table-bordered table-striped' style='width: 120%; text-align: center'>";
+                            echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
                                         echo "<th>No</th>";
                                         echo "<th>Judul Buku</th>";
-                                        echo "<th>Pengarang</th>";
-                                        echo "<th>Tahun Terbit</th>";
-                                        echo "<th>Jumlah Halaman</th>";
+                                        echo "<th>Nama Pengarang</th>";
                                         echo "<th>Penerbit</th>";
+                                        echo "<th>Tahun</th>";
+                                        echo "<th>Jumlah</th>";
+                                        echo "<th>Harga</th>";
                                         echo "<th>Pengaturan</th>";
                                     echo "</tr>";
                                 echo "</thead>";
@@ -57,15 +62,16 @@
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['no'] . "</td>";
-                                        echo "<td>" . $row['judulbuku'] . "</td>";
+                                        echo "<td>" . $row['judul'] . "</td>";
                                         echo "<td>" . $row['pengarang'] . "</td>";
-                                        echo "<td>" . $row['tahunterbit'] . "</td>";
-                                        echo "<td>" . $row['jlh_halaman'] . "</td>";
-                                        echo "<td>" . $row['tahunterbit'] . "</td>";
+                                        echo "<td>" . $row['penerbit'] . "</td>";
+                                        echo "<td>" . $row['tahun'] . "</td>";
+                                        echo "<td>" . $row['jumlah'] . "</td>";
+                                        echo "<td>" . $row['harga'] . "</td>";
                                         echo "<td>";
-                                            echo "<a href='read.php?id=". $row['no'] ."' title='View Record' data-toggle='tooltip'><i class='fas fa-eye'></i></a>";
-                                            echo "<a href='update.php?id=". $row['no'] ."' title='Update Record' data-toggle='tooltip'><i class='fas fa-pencil-alt'></i></a>";
-                                            echo "<a href='delete.php?id=". $row['no'] ."' title='Delete Record' data-toggle='tooltip'><i class='fas fa-trash-alt'></i></a>";
+                                            echo "<a href='read.php?id=". $row['no'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='update.php?id=". $row['no'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['no'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }

@@ -1,16 +1,16 @@
 <?php
-/* Database credentials. Assuming you are running MySQL server with default setting (user 'root' with no password) */
+//variabel inisialisasi
+$servername= "localhost";
+$username = "root";
+$password = "";
+$database= "dbperpus";
 
-define('DB_SERVER', 'localhost');
-define('DB_USERNAME','root' );
-define('DB_PASSWORD','' );
-define('DB_NAME','perpus' );
-
-/* Attempt to connect to MySQL database */
-$link = mysqli_connect(DB_SERVER, DB_USERNAME, DB_PASSWORD, DB_NAME);
+//create connection
+$link = mysqli_connect($servername, $username, $password, $database);
 
 // Check connection
-if($link === false){
-    die("ERROR: Could not connect. " . mysqli_connect_error());
-} 
+if (!$link) {
+    die("KONEKSI GAGAL: " .mysqli_connect_error());
+  }
+  echo "KONEKSI SUKSES";
 ?>
