@@ -25,6 +25,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 
                 // Retrieve individual field value
                 $judul = $row["judul"];
+                $harga = $row["harga"];
                 $detail = $row["detail"];
             } else{
                 // URL doesn't contain valid id parameter. Redirect to error page
@@ -74,11 +75,15 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                         <p class="form-control-static"><?php echo $row["judul"]; ?></p>
                     </div>
                     <div class="form-group">
+                        <label>Harga</label>
+                        <p class="form-control-static"><?php echo $row["harga"]; ?></p>
+                    </div>
+                    <div class="form-group">
                         <label>Detail</label>
                         <p class="form-control-static"><?php echo $row["detail"]; ?></p>
                     </div>
                     
-                    <p><a href="home.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="index.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>
