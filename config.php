@@ -12,5 +12,5 @@ $link = mysqli_connect($servername, $username, $password, $database);
 if (!$link) {
     die("KONEKSI GAGAL: " .mysqli_connect_error());
   }
-  echo "KONEKSI SUKSES";
+ 
 ?>
