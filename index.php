@@ -61,7 +61,7 @@
                                 echo "<tbody>";
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
-                                        echo "<td>" . $row['no'] . "</td>";
+                                        echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['judul'] . "</td>";
                                         echo "<td>" . $row['pengarang'] . "</td>";
                                         echo "<td>" . $row['penerbit'] . "</td>";
@@ -69,9 +69,9 @@
                                         echo "<td>" . $row['jumlah'] . "</td>";
                                         echo "<td>" . $row['harga'] . "</td>";
                                         echo "<td>";
-                                            echo "<a href='read.php?id=". $row['no'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
-                                            echo "<a href='update.php?id=". $row['no'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
-                                            echo "<a href='delete.php?id=". $row['no'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
+                                            echo "<a href='read.php?id=". $row['id'] ."' title='View Record' data-toggle='tooltip'><span class='glyphicon glyphicon-eye-open'></span></a>";
+                                            echo "<a href='update.php?id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><span class='glyphicon glyphicon-pencil'></span></a>";
+                                            echo "<a href='delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash'></span></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }
@@ -95,4 +95,3 @@
     </div>
 </body>
 </html>
-
