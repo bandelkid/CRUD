@@ -236,14 +236,34 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+       Private Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         ' Pastikan textbox untuk pencarian tidak kosong
         If txtSearch.Text <> "" Then
             ' Panggil metode Koneksi untuk membuka koneksi ke database
             Call Koneksi()
 
             ' Buat query SQL untuk mencari data berdasarkan NISN
-            Dim queryCari As String = "SELECT * FROM murid WHERE nisn = '" & txtSearch.Text & "'"
+            Dim queryCari As String = "SELECT * FROM murid WHERE 
+               nisn LIKE '%" & txtSearch.Text & "%' 
+               OR nama LIKE '%" & txtSearch.Text & "%' 
+               OR jurusan LIKE '%" & txtSearch.Text & "%' 
+               OR kelas LIKE '%" & txtSearch.Text & "%'
+               OR alamat LIKE '%" & txtSearch.Text & "%'
+               "
+            ' Buat adapter untuk mengambil data dari database
+            Dim adapter As New OdbcDataAdapter(queryCari, Conn)
+
+            ' Buat dataset untuk menampung hasil pencarian
+            Dim ds As New DataSet()
+
+            ' Isi dataset dengan hasil query
+            adapter.Fill(ds, "murid")
+
+            ' Bind dataset ke DataGridView
+            DataGridView1.DataSource = ds.Tables("murid")
+
+            ' Matikan tombol Update jika pencarian tidak menghasilkan data
+            btnEdit.Enabled = False
 
             ' Buat command untuk menjalankan query
             Cmd = New OdbcCommand(queryCari, Conn)
